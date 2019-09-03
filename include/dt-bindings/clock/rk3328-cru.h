@@ -173,6 +173,9 @@
 #define PCLK_DCF		233
 #define PCLK_SARADC		234
 #define PCLK_ACODEC		235
+/*NI mod */
+#define PCLK_WDT		236
+/*NI mod end */
 
 /* hclk gates */
 #define HCLK_PERI		308

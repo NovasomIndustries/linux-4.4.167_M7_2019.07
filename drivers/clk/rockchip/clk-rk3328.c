@@ -897,6 +897,7 @@ static void __init rk3328_clk_init(struct device_node *np)
 {
 	struct rockchip_clk_provider *ctx;
 	void __iomem *reg_base;
+	struct clk *clk;
 
 	reg_base = of_iomap(np, 0);
 	if (!reg_base) {
@@ -912,6 +913,14 @@ static void __init rk3328_clk_init(struct device_node *np)
 		iounmap(reg_base);
 		return;
 	}
+
+/* fil */
+	clk = clk_register_fixed_factor(NULL, "pclk_wdt", "pclk_bus", 0, 1, 1);
+	if (IS_ERR(clk))
+		pr_warn("%s: could not register clock pclk_wdt: %ld\n", __func__, PTR_ERR(clk));
+		else
+	rockchip_clk_add_lookup(ctx, clk, PCLK_WDT);
+/* fil end */
 
 	rockchip_clk_register_plls(ctx, rk3328_pll_clks,
 				   ARRAY_SIZE(rk3328_pll_clks),
